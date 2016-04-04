@@ -1,5 +1,25 @@
-var waitStaffApp = angular.module('waitstaff', []);
-waitStaffApp.controller('waitStaffController', ['$scope', function($scope){
+var waitStaffApp = angular.module('waitstaff', ['ngRoute'])
+.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/', {
+		templateUrl: 'home.html',
+		controller: 'HomeCtrl'
+	}).when('/newMeal', {
+		templateUrl: 'newMeal.html',
+		controller: 'NewMealCtrl'
+	}).when('/myEarnings', {
+		templateUrl: 'myEarnings.html',
+		controller: 'MyEarningsCtrl'
+	});
+}])
+.run(function($rootScope) {
+    $rootScope.total = 0;
+    $rootScope.subtotal = 0;
+    $rootScope.tip = 0;
+    $rootScope.tipTotal = 0;
+    $rootScope.mealCount = 0;
+    $rootScope.avgTipPerMeal = 0;
+})
+waitStaffApp.controller('NewMealCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
 
 	$scope.resetDetails = function(){
 		$scope.mealPrice = '';
@@ -12,28 +32,20 @@ waitStaffApp.controller('waitStaffController', ['$scope', function($scope){
 		$scope.taxRate = 0;
 		$scope.tipPercentage = 0;
 		$scope.tip = 0;
-		$scope.total = 0;
-	};
-
-	$scope.initEarnings = function() {
-		$scope.tipTotal = 0;
-		$scope.mealCount = 0;
-		$scope.avgTipPerMeal = 0;
 	};
 
 	$scope.init = function() {
 		$scope.resetDetails();
 		$scope.initCharges();
-		$scope.initEarnings();
 	};
 
-	$scope.init();
-
-	$scope.submitDetails = function() {
+	 $scope.init();
+	
+	$rootScope.submitDetails = function() {
 		$scope.customerCharges();
-		$scope.tipTotal += $scope.tip;
-		$scope.mealCount++;
-		$scope.avgTipPerMeal = $scope.tipTotal/$scope.mealCount;
+		$rootScope.tipTotal += $scope.tip;
+		$rootScope.mealCount++;
+		$rootScope.avgTipPerMeal = $scope.tipTotal/$scope.mealCount;
 	};
 
 	$scope.customerCharges = function() {
@@ -43,5 +55,22 @@ waitStaffApp.controller('waitStaffController', ['$scope', function($scope){
 	};
 
 
+
+}]).controller('MyEarningsCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+
+	$scope.initEarnings = function() {
+		$rootScope.tipTotal = 0;
+		$rootScope.mealCount = 0;
+		$rootScope.avgTipPerMeal = 0;
+	};
+
+	$scope.resetEarnings = function() {
+		$rootScope.tipTotal = 0;
+		$rootScope.mealCount = 0;
+		$rootScope.avgTipPerMeal = 0;
+	}
+
+
+}]).controller('HomeCtrl', ['$scope', function($scope) {
 
 }]);

@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h3>My Earnings Info</h3>
+		<dl class="dl-horizontal">
+			<div class="totals">
+			  <dt>Tip Total</dt>
+			  <dd>{{ tipTotal | number:2 }}</dd>
+			  <dt>Meal Count</dt>
+			  <dd>{{mealCount | number: 0}}</dd>
+			  <dt>Average Tip per Meal</dt>
+			  <dd>{{ avgTipPerMeal | number:2 }}</dd>
+			</div>
+		</dl>
+	</div>
+	<button id="resetButton" ng-click="resetEarnings()">Reset</button>
+</div>
