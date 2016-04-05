@@ -1,4 +1,4 @@
-var waitStaffApp = angular.module('waitstaff', ['ngRoute'])
+var waitStaffApp = angular.module('waitstaff', ['ngRoute', 'ngAnimate'])
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'home.html',
